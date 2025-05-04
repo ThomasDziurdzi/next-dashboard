@@ -99,7 +99,7 @@ export async function updateInvoice(
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
         WHERE id = ${id}
       `;
-    } catch (error) {
+    } catch {
       return { message: 'Database Error: Failed to Update Invoice.' };
     }
    
@@ -111,7 +111,7 @@ export async function updateInvoice(
     try {
       await sql`DELETE FROM invoices WHERE id = ${id}`;
       revalidatePath('/dashboard/invoices');
-    } catch (error) {
+    } catch {
       throw new Error('Failed to delete Invoice.');
     }
   }

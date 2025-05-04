@@ -107,12 +107,14 @@ export async function updateInvoice(
     redirect('/dashboard/invoices');
   }
 
-export async function deleteInvoice(id: string) {
-    // throw new Error('Failed to delete Invoice');
-    
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
-}
+  export async function deleteInvoice(id: string) {
+    try {
+      await sql`DELETE FROM invoices WHERE id = ${id}`;
+      revalidatePath('/dashboard/invoices');
+    } catch (error) {
+      throw new Error('Failed to delete Invoice.');
+    }
+  }
 
 export async function authenticate(
     prevState: string | undefined,
